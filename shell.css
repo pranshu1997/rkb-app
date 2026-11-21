@@ -1,0 +1,29 @@
+/* RKB shell, section side: the Settings panel (opens inside the section's frame, under the RKB bar) and text size.
+   Colours come from the app's own tokens (--bg --card --fill --line --text --blue), so light and dark follow them. Spacing: 8-pt scale only. */
+#rkb-panel {
+  position: fixed; inset: 0; z-index: 60; overflow-y: auto; background: var(--bg, #f2f2f7); color: var(--text, #000);
+  font: 17px/1.35 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  padding: 0 16px calc(32px + var(--rkb-sab, 0px));
+}
+.rkb-panel-in { max-width: 600px; margin: 0 auto; display: grid; gap: 24px; padding-top: 8px; }
+.rkb-panel-in > header { display: flex; align-items: center; justify-content: space-between; min-height: 56px; }
+.rkb-panel-in h1 { margin: 0; font-size: 34px; font-weight: 700; }
+.rkb-panel-in h2 { margin: 0 0 8px; font-size: 22px; font-weight: 700; }
+.rkb-panel-in section { display: grid; }
+.rkb-close { min-height: 48px; padding: 0 16px; border: 0; background: none; color: var(--blue, #0066d6); font: inherit; font-weight: 600; cursor: pointer; }
+.rkb-seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; padding: 4px; border-radius: 12px; background: var(--fill, #e9e9ef); }
+.rkb-seg button {
+  min-height: 48px; border: 0; border-radius: 8px; background: none; color: var(--text, #000); font: inherit; font-weight: 500; cursor: pointer;
+}
+.rkb-seg button[aria-pressed=true] { background: var(--card, #fff); font-weight: 700; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
+.rkb-out {
+  min-height: 56px; border: 0; border-radius: 12px; background: var(--card, #fff); color: var(--bad, #d70015); font: inherit; font-weight: 600; cursor: pointer;
+}
+.rkb-msg { margin: 8px 0 0; color: var(--muted, #636366); font-size: 15px; }
+.rkb-slot { display: grid; gap: 24px; }
+.rkb-slot > [data-view] { padding: 0; }
+html.rkb-panel-open body { overflow: hidden; }
+
+/* Text size: the root font-size in rkb-tokens.css scales every rem. */
+#rkb-panel button:focus-visible { outline: 3px solid var(--blue, #0066d6); outline-offset: 2px; }
+.rkb-go { min-height: 56px; border: 0; border-radius: 12px; background: var(--card, #fff); color: var(--blue, #0066d6); font: inherit; font-weight: 600; cursor: pointer; }

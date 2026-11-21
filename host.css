@@ -1,0 +1,50 @@
+/* RKB window: one top bar, one frame per section. Same tokens as the apps (Pulse CSS), 8-pt spacing only. */
+:root { --rkb-top: calc(64px + env(safe-area-inset-top)); --rkb-vb: 0px; }
+html, body { height: 100%; margin: 0; overflow: hidden; background: var(--bg); color: var(--text); font: var(--fs-body)/1.3 var(--font); }
+#rkb-probe { position: fixed; visibility: hidden; padding-bottom: env(safe-area-inset-bottom); }
+#rkb-bar {
+  position: fixed; inset: 0 0 auto 0; z-index: 2; display: flex; align-items: center; gap: 4px; box-sizing: border-box;
+  height: var(--rkb-top); padding: env(safe-area-inset-top) 8px 0;
+  background: color-mix(in srgb, var(--card) 86%, transparent); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 0.5px solid var(--line);
+}
+#rkb-bar nav { flex: 1; min-width: 0; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; padding: 4px; border-radius: 14px; background: var(--fill); }
+#rkb-bar a {
+  display: flex; align-items: center; justify-content: center; min-height: var(--tap); min-width: 0; padding: 0 4px; border-radius: 10px; box-sizing: border-box;
+  color: var(--muted); font-size: var(--fs-body); font-weight: 600; text-decoration: none; white-space: nowrap;
+}
+#rkb-bar a[aria-current] { background: var(--card); color: var(--text); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
+.rkb-gear { width: var(--tap); height: var(--tap); flex: none; display: grid; place-items: center; border: 0; border-radius: 12px; background: none; color: var(--blue); cursor: pointer; }
+#rkb-bar a:focus-visible, .rkb-gear:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+#rkb-viewer { position: fixed; z-index: 1; inset: var(--rkb-top) 16px auto; height: var(--tap); margin-top: 8px; box-sizing: border-box; display: flex; align-items: center; padding: 0 16px; border-radius: 12px;
+  background: color-mix(in srgb, var(--blue) 14%, transparent); color: var(--blue); font-size: var(--fs-secondary); font-weight: 600; }
+#rkb-viewer[hidden] { display: none; }
+html.rkb-viewing { --rkb-vb: 56px; }
+#rkb-frames { position: fixed; inset: calc(var(--rkb-top) + var(--rkb-vb)) 0 0 0; }
+.rkb-frame { display: block; width: 100%; height: 100%; border: 0; background: var(--bg); }
+.rkb-frame[hidden] { display: none; }
+
+/* Desktop (window >= 1024px): left sidebar replaces the top bar. Contract: rkb6-desktop-contract.md. Phone is untouched. */
+#rkb-side { display: none; }
+@media (min-width: 1024px) {
+  :root { --rkb-top: 0px; --rkb-side: 248px; }
+  #rkb-bar { display: none; }
+  #rkb-side {
+    position: fixed; inset: 0 auto 0 0; width: var(--rkb-side); z-index: 2; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px; padding: 24px 16px;
+    background: var(--card); border-right: 0.5px solid var(--line);
+  }
+  .rkb-brand { padding: 0 12px; font-size: var(--fs-section); font-weight: var(--fw-title); }
+  #rkb-side nav { display: grid; gap: 4px; }
+  #rkb-side a {
+    display: flex; align-items: center; min-height: var(--tap); padding: 0 12px; border-radius: 12px; box-sizing: border-box;
+    color: var(--text); font-size: var(--fs-body); font-weight: 600; text-decoration: none;
+  }
+  #rkb-side a.sub { margin-left: 16px; font-weight: 500; color: var(--muted); }
+  #rkb-side a:hover { background: var(--fill); }
+  #rkb-side a[aria-current] { background: var(--blue-fill); color: var(--on-accent); }
+  #rkb-side a:focus-visible, #rkb-side .rkb-gear:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+  .rkb-side-set { margin-top: auto; width: 100%; height: var(--tap); display: flex; align-items: center; gap: 12px; padding: 0 12px; box-sizing: border-box; font: inherit; font-weight: 600; text-align: left; }
+  #rkb-viewer { inset: 8px 16px auto calc(var(--rkb-side) + 16px); margin-top: 0; }
+  #rkb-frames { inset: var(--rkb-vb) 0 0 var(--rkb-side); }
+  html.rkb-viewing { --rkb-vb: 64px; }
+}
